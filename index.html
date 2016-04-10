@@ -1,0 +1,411 @@
+<!DOCTYPE html >
+<html>
+<head>
+<title>Shawn Tang and Mary Zhang's 1st year anniversary</title>
+<meta charset='utf-8' />
+<link rel="shortcut icon" href="./images/icon.png">
+</head>
+<style type='text/css'>
+    body{margin:0; padding:0; }
+    .clear{clear:both;}
+#myContent, #myContent blink{position:absolute; left:240px; top:100px; width:456px;height:400px;color: #fff;line-height:20px; font-size: 16px;}
+    blink{display:inline;}
+#weather-body{margin:0; padding:0;  }
+#weather{ position:absolute;left:20px; top:30px;font-family:"Microsoft YaHei","SimHei";}
+#weather p{ }
+    p#city{ width:120px; color:#FFF; margin:20px; font-size:28px; }
+    p#month{ width:200px; color:#FFF; margin:20px; margin-left:50px; font-size:32px;}
+    p#stat{ width:200px; color:#FFF; margin:20px; font-size:26px; }
+#music-box{  position:absolute;right:20px; padding:30px;filter:alpha(opacity=70);-moz-opacity:0.7;-khtml-opacity: 0.7;opacity: 0.7;bottom:30px; text-align:center;}
+#music-box div{ }
+#music-box:hover{filter:alpha(opacity=100);-moz-opacity:1;-khtml-opacity: 1;opacity: 1;}
+    h2#song-title{ font-family:"Microsoft YaHei","SimHei"; color:#fff;}
+    h3#song-author{font-family:"Microsoft YaHei","SimHei"; color:#fff;}
+    div#music-process{ width:400px;}
+    div#music-process-p{float:left; margin:0px 20px 0 20px; display:block;width:290px;background:url(./images/button.gif) 0 -133px repeat-x  ; height:40px; }
+    span#music-process-slide{ cursor:pointer;display:block;float:left; width:30px;background:url(./images/button.png) -30px -230px no-repeat ; height:30px;}
+    div#music-ctime{display:block; float:left; color:#FFF; font-weight:bold; width:40px;height:30px;font-family:"Arial";}
+    div#music-etime{display:block; float:left; color:#FFF;font-weight:bold;width:40px;height:30px;font-family:"Arial";}
+    div#music-play{ cursor:pointer; display:none;margin:10px auto;width:100px; border:0px #FFF solid; background:url(./images/button.png) 0 -12px no-repeat  ; height:70px;}
+    div#music-next{cursor:pointer;display:none; margin:10px auto; width:100px; margin-top:15px; border:0px #FFF solid; background:url(./images/button.png) 0 -85px no-repeat ; height:40px;}
+    div#music-volume{float:right;  margin:10px;width:50px;}
+    div#music-volume-v{float:left; display:block;width:50px;background:url(./images/button.png) 3px -250px no-repeat ; height:100px; }
+    span#music-volume-slide{cursor:pointer;display:block;float:left; width:40px;background:url(./images/button.png) 0px -353px no-repeat ; height:30px;}
+</style>
+
+<script type="text/javascript" >
+
+var music ='';
+var musicBox ='';
+var musicPlay='';
+var musicNext='';
+var musicV='';
+var musicProcess='';
+var musicSlide='';
+var musicSlideLeft=0;
+var musicCtime='';
+var musicEtime='';
+var musicVolume='';
+var musicVolumeSlide='';
+var mouseX='';
+var mouseY='';
+var mouseDown=false;
+var bdy='';
+var backgroundImages=new Array();
+var backgroundNumber=1;
+var songNum=1;
+var wordNum=1;
+var playList=new Array();
+var nextSong='';
+var songs=new Array();
+var locations=new Array();
+var feelings=new Array();
+var words=new Array();
+var wordList=new Array();
+
+var i = 0;
+var delay = 150;
+var inputText;
+
+var wordList={
+    1:{'title':"parties",'months':"第一个月", 'feelings':"考验", 'letter':"我们的故事，从2012年9月15日晚开始，注定永恒<br>那晚的你，是让我最惊喜的女生，输了的你，不声不吭，拿起一杯红酒，一口气把它喝下了O.O<br>然后我开启了我们相识的第一次对话<br>“你失恋了吧？”<br>你终于等来了我对你说的第一句话，你笑了<br>接着，你哭了，趴在桌子上，哭了<br>我当时慌张了，但我尽量表现得成熟，感同身受的说<br>“我也失恋了一个月”<br>呵呵，故事就这么开始了<br>你醉了，指着另一个女生对我说，我是不是喜欢她，我说<br>“我喜欢你”，你不信<br>后来很长一段时间，你说那个晚上的你真傻<br>我想对你说，那是这辈子我觉得你最可爱的时候<br><br>第一次，你来我的宿舍，你走的时候，留下了背景的那张纸<br>细腻的情话，漂亮的书写，深深被你折服和感动<br>我当即把它折起来，放进了我的钱包<br><br>第一个月，我的心跳，因为你，比往常跳动得更频繁<br>"},
+    2:{'title':"31&NPQ",'months':"第二个月", 'feelings':"磨合", 'letter':"11月6号晚11点，黑板上的红色字体，你写在ASU的自习室里<br>11月10日用一整个下午，你为我拍的36张自拍，组成一个爱心<br><br>说不出你有多么用心，没有辞藻足以形容<br>说不出我有多幸运，只想做得更好去回报你<br>我也送了礼物给你，网页版爱心计时器，记录我们一起的日子<br>11月1号的时候我第一次给你写了篇日志，反省自身<br><br>那时我的糟糕透啦，总是惹你生气<br>陪你去逛街，我只会在旁边吐槽<br>买10只鸡翅，无心说了句，你吃5只我吃5只<br>烧热水时，觉得里面的水还比较多，不用倒了再重新装<br>去mall买耳机，途中进一服装店时多嘴插了句，不是去买耳机吗<br>去mall逛街，看到$5的bra，想起Victoria's Secret买的$55的bra，戏称可以买11个了<br>还有……<br><br>现在想起，真是哭笑不得<br>那时的我们，有那么多的小架<br>谢谢你，让我改变了这么多<br>"},
+    3:{'title':"圣路易斯",'months':"一个季节", 'feelings':"转折", 'letter':"11月19日，去圣路易斯<br>记得那次，我们闹得挺僵<br><br>嗯，我们第一次拍出了满意的合照<br>回来之后，我们开始准备搬家，买了不少家具<br>然后我们就一起拼啊，装啊，哈哈<br>才发现你是个勤快爱动手的好姑娘<br><br>12月6日，终于搬家啦！兴奋不已<br>你买了好多小玩意，然后自己设计制作<br>我们的房间让这些一张张小纸点缀得好漂亮<br><br>后来，你一发不可收拾，动手做了好多精致的礼物<br>比如用小棍子拼成的大雪花<br>比如用粗毛线和图钉做成的爱心<br>比如用笑棍子和毛线做成的小秋千和小飞机<br><br>你是个热爱生活的好姑娘，原来简简单单的家被你打理得温馨又别致<br><br>我发现我更爱你了"},
+    4:{'title':"新家新车",'months':"四个月了", 'feelings':"稳定",'letter':"搬了家后，我们好像变得稳定多了，吵架少了很多<br>突然有一天，发现你为我改变了发型，直到现在都还记得当时的惊喜<br><br>12月25日，圣诞夜，Jonesboro下起了冬天的第一场雪<br>由于一直生活在南方，这是我第一次看下雪，和你看得<br>还记得不，我们接着出去打雪仗，把手都冻红了<br>后来我们决心买两对手套专门拿来玩雪，却再也没遇到圣诞夜那么大的雪了<br>我们还一起砌了小雪人，还把我们买的黄瓜和小胡萝卜装点上去<br>第二天，发现小雪人被搬到前门，还收到了封匿名信，好欢乐<br><br>1月5日，我们一起飞去NYC买车，花了三天时间把它开了回来<br>我们一路领略了很多景色，也遭遇了很阴森的Hancock小镇<br>回来后，我们沉迷了temple run2，我玩了接近2千万分<br>......<br>…….<br>有一天，我们刷微博，看到那些强悍的情侣抱抱<br>我们决心试试<br>结果我出糗了，遭比比嫌弃了。。<br>每每想到这些我就笑了:)"},
+    5:{'title':"元宵春晚",'months':"五个月了", 'feelings':"甜蜜",'letter':"一起生活之后，我的厨艺真是越来越好咯，收到张梦圆大人多次表扬，深感荣幸<br>还渐渐发现，做得一锅好汤，是哄好比比的法宝之一<br><br>2月22号，我跟你闹分手，你判我无妻徒刑，缓刑三天<br>这三天里我们哭得不像样子<br>为了哄回你，我去打了耳钉<br>然后跟你说，你要等我耳朵不疼了才能走，你才不走<br>那个周末，我们买了本日记本，你说会把它写到老<br><br>2月25日，我们上ASU春晚<br>情侣走T台秀，参加之后才知道只有我们一对情侣有木有<br>我和Tigo一弹一唱的《老男孩》不知有没有得比比的欢心<br>参加完节目回来，饿了，我们顺便拿出冰箱里剩下的汤圆，把元宵给过了<br><br>3月12日，不知是不是比比为了奖励我长得越来越帅，决定送我一对Buberry的鞋子做半周年纪念<br>结果，更帅了<br>还记得那时你总是硬要给我按摩，是因为对身体好<br>"},
+    6:{'title':"亚特兰大",'months':"半年了", 'feelings':"趣味",'letter':"“与汝相依半载，深追汝之殊遇，不胜感激......”<br>这是我们的半周年微博，也是从这条开始，我们每个月都写纪念日微博<br>第二天，3月16日，我们一起去Forest Park溜达了一圈<br>安静的公园，看到的都是一家大小出来闲适<br>找到了一个秋千，你坐上，我推，看着你像个小孩子一样开心得笑<br>我们在湖边的小路追逐，发现原来跑一跑是那么的爽快<br>我们玩那个大转盘，你坐在上面，我推着转，看着你笑<br>一切那么的美好<br><br>3月18日，我们高高兴兴地开了一天的车，到Atlanta<br>这是我们的半周年蜜月之旅<br>你把脚都放到了车窗前，一路说笑打闹，What makes you beautiful，你一听就兴奋，一路放到回家<br>微博记录着我们的一切<br><br>“动物园里都是猩猩..你看得比谁都欢乐.那65种可乐.你应该喝了一半了吧..也就算了.非要去什么艺术博物馆..陶冶完情操 看了那么多抽象画人都忧郁了 还害我手贱买了画板.其实还好我们没有去什么纪念馆纪念碑的..我分给你的担担面好吃嘛？你不要忘记开车的时候我不舍不弃卖力唱歌给你听啊..别生气 Relax~”<br><br>......<br>"},
+    7:{'title':"学习&美食",'months':"七个月了", 'feelings':"满足",'letter':"从Atlanta回来之后，我们就开始紧张地复习了，好多考试<br>这个月我们特别会吃，尝试很多不同的美食<br>还记得你做的像烧饼一样的cookies我最爱吃了<br>那段时间，我经常做排骨给你吃<br>突然有一天，我独创了番茄排骨汤面，让比比吃的赞不绝口<br><br>“我有个好宝宝 会在我来m的时候煮红豆黑米绿豆红枣粥给我喝 让我肚子不痛不痛 没食欲了他把米饭摇身一变 变成小排骨油炒豆腐蛋炒饭让我吃了还想吃 红糖水一直准备着。我会告诉你他是@唐耀星Shawn 吗？他看到这里会笑的 因为 他以为我要爆料。么么哒 你懂的….”<br>摘自4月8日的微博<br>至于你说的那个爆料，，咳咳。。<br><br>我们看了《在一起》那部片，你想吃柯震东做的那个猪扒饭<br>于是我真的学做了那个咖喱猪扒饭，结果你又一次赞不绝口<br><br>那段时间，我们都过着中国时间，晚上活动，白天睡觉<br>那段时间我开始迷恋部落战争这个iPad游戏<br>那段时间，我跟着你爱上了林宥嘉的歌，就像这首<br><br>这个月忙坏了，但每次能做出你喜欢的食物，就感到幸福极了"},
+    8:{'title':"比比生日",'months':"八个月了", 'feelings':"难忘",'letter':"4月18日，终于迎来了你的生日<br>记得那晚，你还在上面做着作业，发着小脾气<br>我在下面给你准备生日蛋糕，还在画板那里给你画了画<br>你下来之后，发现我差不多给你做好的蛋糕，感动得哭了，然后你边哭着边看我完成最后的步骤<br>记得，我没有录好视频<br>最后却紧紧抱在一起说不会忘记<br>记得，你生日许下的愿望......<br><br>第二天，我们就租车启程去New Orleans<br>在圣路易斯大教堂前的喷泉前，我们碰到的那对lover<br>一句Would you marry me？女的哭得一塌糊涂<br>记得你喜欢的这首Personality，一回到家就找<br>记得走了好多路，你要我走在你左边，搂着你<br>记得去Oceana吃牡蛎，我们门前排队亲亲<br>记得回家时，我困了，你一路勇敢开了6个小时的车<br>记得你一度狂飙到100迈，放歌好High<br>记得一回到村就因为超速被Cop喊停，看到车后的东西，还怀疑我们有没有嗑药了<br><br>四月底，你的体重重新回到了阔别5年的100斤<br><br>五月初，发生了很多意外<br>感谢那段时间你的支持<br>"},
+    9:{'title':"广州塔上",'months':"九个月了", 'feelings':"浪漫",'letter':"6月5日，这一天，我向你求婚了<br><br>永远记得这一天，我的心不在焉，被你看出了<br>这一天，我的长久以来的一个心愿实现了<br>这一天，你露出了最温柔的笑<br>这一天，你扎的小辫子很可爱<br>这一天，穿黄色娃娃领裙子的你很美…….<br><br>广州塔上的每一幕，你一定会记得比我清楚<br>…….<br>而我，最难忘的是你带上戒指后露出的喜悦<br>接下来的一个星期，你天天说它很漂亮，像做梦一样<br>那是我送给你的最有成就感最开心的礼物<br>而你的激动成为我最大的回报<br><br>那个月的我们，基本保持每个星期见一次面<br>记得5月25日那天，你在家里用自己的方法做出了微博封面，头像，微博背景浑然天成，我猛夸比比真聪明<br>那天，我还转发了你的微博，上面写着<br>“以前我邋遢，作息不规律，从不整理内务，不煮饭，不洗碗，不抹桌子，不哄人，不对身边的人微笑，不拥抱亲人，闷骚，对事物不悲不喜，麻木，不上心，记性差，随便，对生活品质没有追求体会。是你，把我从以上的吐槽点一一以泪的代价改了过来，变得更加有血有肉，懂得生活，热爱生活。你太辛苦了，我爱你”<br><br>我到现在都在想，这世界上还有比你更伟大的女朋友吗<br>"},
+    10:{'title':"到处奔走",'months':"十个月了", 'feelings':"波折",'letter':"6月14日，我们第一次去吃烧烤，喝啤酒<br>呵呵，那晚我们诉说的是一个伤感的故事<br>那晚我们一起走路回家，那是我们一直以来散步最长的一次<br>突然，走到一个地方，你停下来就猛亲我<br><br>6月21日，我回校考试，我们见面了<br>那天凌晨5点多，你m痛醒了，发信息给我，没想到我马上醒来，最快的速度回了你信息<br>你十分感动，送了我一次免死的机会<br>早上考完试，下午我们想去下渡路吃小龙虾，结果找不到，来到了真功夫<br>我们第一次戴上我们的相同款式的眼镜拍照<br>想起那次，你的嘟嘟嘴特别鲜红<br>你的每一张照片都笑得特别灿烂<br><br>25日，我们再次见面，这次我要去成都了<br>我们终于吃成了麻辣小龙虾，在客村的麻辣香锅店<br>你在公车上给我拍了一版照片，羞涩的<br>在香锅店里又给我拍了一版，还必须得搞怪的<br>我们吃的幸福洋溢<br><br>哈哈，那段时间的我们特别相信算命先生的话<br>你外婆给我们算了，说我们过一辈子没问题，叫你好好把握<br>到了成都，我在青羊宫外面算命<br>那个阿婆叫我多点迁就你，说我们天生一对，地设一双<br><br>由于我在成都期间出现严重过失，把免死机会用掉了<br><br>7月3日，你设立了9条家规<br>7月9日，我从成都飞回来了，你来机场接我，等了几个小时<br>7月10日，我们一起看了电影小时代，回去后你看了它的小说<br><br>之后，我们再一次闹僵。。。<br><br>"},
+    11:{'title':"私奔",'months':"11个月了", 'feelings':"幸福", 'letter':"7月14日，我去了南宁<br>21号，我就溜回广州了<br>并且，我再一次穿了耳洞<br>22号，你和妈妈出了矛盾<br>你收拾起你的行李，决心踏出家门，开启了说走就走的旅程<br>23号，我们做出了在沙滩上埋鞋子并且差点找不到的经典事情<br>但我终究找到了，又一次在比比面前当回了英雄<br><br>一起去沙滩，一直是我们的愿望之一，实现了<br>晚上，沙滩上的浪好大，我们的脚泡在海水中，让它慢慢被沙子吞噬<br>我抱着你，在海滩上打转，你的笑声跟着浪花一起成了一首歌<br>我为你烧了不少烤翅，你吃得甜滋滋，整晚都乖得不得了<br><br>24号到南宁，带你体验了八天的自由生活<br>8月1号回到恩平，过我奶奶的生日，和你过了5天的小城生活<br>骑单车，打羽毛球，摘莲雾吃，半夜开车去吃烧烤……<br>每一样都成了我们的《第一次》<br>每一样都成了我们的《简单爱》<br><br>8月14日，你跟我出国前最近一次见面，微博搜了我好多老照片<br>我们去吃了黄记煌，又拍了一版猥琐照片<br><br>15号，你飞走了<br>"},
+    12:{'title':"地球两边",'months':"一周年", 'feelings':"思念",'letter':"13000KM，遥远的距离<br>你又瘦了，89斤<br>但你一直做的很好，不让我担心<br>一个人生活在家里，每天给自己做饭，自己睡觉<br>无聊了会看电视剧，上网购物<br>……<渐渐的，你变得比以前更独立，更坚强了<br>两地的时差，让我们都成了夜猫，都多了对熊猫眼<br>你打印了很多我们一起的照片，挂在房间里<br>你定制了一双写有我们姓的运动鞋<br>你每天抱着熊宝宝睡觉<br>你的挂念无时无刻不催促着我飞往有你在的地方<br>所以我很快又去搞好旅游签证<br>接着买好了机票<br>仿佛又是一次说走就走的行程<br>此刻，只想写封信给你<br><br>“亲爱的张梦圆同志，我很喜欢你，我已经跟妈妈说过了，我要飞美国，他们虽然稍有意见，但是我决定了，不会变。现在我还有一些事务还没交代好，所以，请你做好在美国接待我的准备。<br>亲爱的张梦圆同志，我不会说话，但我有句心里话要告诉你。<br>我想和你生活在一起，永远。”"},
+	};
+
+function init(){
+
+    //**************************************//
+    //Music Box
+    //*************************************//
+    musicBox = document.getElementById("music-box");
+    musicPlay= document.getElementById('music-play');
+    musicNext= document.getElementById('music-next');
+    musicCtime=document.getElementById('music-ctime');
+    musicEtime=document.getElementById('music-etime');
+    musicSlide=document.getElementById('music-process-slide');
+    musicProcess=document.getElementById('music-process-p');
+    musicVolume=document.getElementById('music-volume-v');
+    musicVolumeSlide=document.getElementById('music-volume-slide');
+    musicSlide.style.marginLeft="0px";
+    musicProcess.style.width="270px";
+    bdy=document.getElementsByTagName('body');
+    bdy=bdy[0];
+    var screenH = window.screen.height;
+    var screenW = document.body.clientWidth;
+    //Background cache //
+    backgroundNumber =1;
+    backgroundImages[0] = new Image();
+    backgroundImages[1] = new Image();
+    backgroundImages[0].src = "./love/"+backgroundNumber+".jpg";
+    backgroundImages[1].src = "./love/"+(backgroundNumber >= 13 ? 1:backgroundNumber+1)+".jpg";
+    bdy.style.background = "url("+backgroundImages[0].src+") top";
+    //*****************//
+    //words cache//
+    wordNum = 1;
+    words[0] = wordList[wordNum];
+    words[1] = wordList[wordNum + 1];
+    document.getElementById('city').innerHTML=words[0]['title'];
+    document.getElementById('month').innerHTML=words[0]['months'];
+    document.getElementById('stat').innerHTML=words[0]['feelings'];
+    inputText=words[0]['letter'];
+    scrollit();
+    //*********//
+
+    music = document.getElementsByTagName('audio');
+    music = music[0];
+    music.autobuffer=true;
+
+    setInterval(mProcess,1000);
+    musicProcess.addEventListener('mousedown',mSlideProcessDown);
+    musicProcess.addEventListener('mousemove',mSlideProcessMove);
+    musicProcess.addEventListener('mouseup',mSlideProcessUp);
+
+    musicVolume.addEventListener('mousedown',mSlideVolumeDown);
+    musicVolume.addEventListener('mousemove',mSlideVolumeMove);
+    musicVolume.addEventListener('mouseup',mSlideVolumeUp);
+
+}
+
+function mProcess(){
+	if(1)
+	{
+		var ctime = music.currentTime;
+		var time = Math.floor(ctime/60)+":"+(Math.floor(ctime-60*Math.floor(ctime/60))<10 ? "0"+Math.floor(ctime-60*Math.floor(ctime/60)) : Math.floor(ctime-60*Math.floor(ctime/60)));
+		var time2 =music.duration-music.currentTime;
+		var etime=Math.floor(time2 /60)+":"+(Math.floor(time2-60*Math.floor(time2/60))<10 ? "0"+Math.floor(time2-60*Math.floor(time2/60)) : Math.floor(time2-60*Math.floor(time2/60)));
+		var ra = music.currentTime/music.duration;
+
+		var mpw=musicProcess.style.width;
+		mpw = mpw.substring(0,mpw.indexOf('px'));
+		musicSlide.style.marginLeft = mpw *ra+"px";
+
+		musicCtime.innerHTML=time;
+		musicEtime.innerHTML=etime;
+		if(music.ended==true)
+		{
+			mRandPlay();
+		}
+	}
+}
+
+function mSlideProcessDown(e){
+		mouseDown=true;
+		mouseX = e.pageX;
+}
+
+function mSlideProcessMove(e){
+	if(mouseDown==true)
+	{
+		var mLeft= (e.pageX-mouseX);
+		var t2 = music.currentTime+music.duration*mLeft/musicProcess.style.width.substring(0,musicProcess.style.width.indexOf('px'));
+		t2=t2>0 ? t2:0;
+		mLeft=musicProcess.style.width.substring(0,musicProcess.style.width.indexOf('px'))*t2/music.duration;
+		musicSlide.style.marginLeft=  (mLeft>0&&mLeft<300  ? mLeft:0)+"px";
+
+	}
+}
+
+function mSlideProcessUp(e){
+	if(mouseDown==true)
+	{
+		mouseDown=false;
+
+		var mLeft= (e.pageX-mouseX);
+		var t2 = music.currentTime+music.duration*mLeft/musicProcess.style.width.substring(0,musicProcess.style.width.indexOf('px'));
+		mLeft=musicProcess.style.width.substring(0,musicProcess.style.width.indexOf('px'))*t2/music.duration;
+		t2=t2>0 ? t2:0;
+		musicSlide.style.marginLeft= (mLeft>0&&mLeft<300  ? mLeft:0)+"px";
+		mouseDown=false;
+		mouseX=0;
+
+		music.currentTime=t2;
+
+
+	}
+	mouseDown=false;
+}
+
+function mVolume(){
+music.volume=0.5;
+musicVolumeSlide.style.marginTop = 70 *(1-music.volume)+"px";
+
+}
+
+var vT=0;
+var aT=0;
+function mSlideVolumeDown(e){
+		mouseDown=true;
+		mouseY = e.pageY;
+		if(musicVolume.style.height=='')
+			musicVolume.style.height="100px";
+		vT = musicVolumeSlide.style.marginTop.substring(0,musicVolumeSlide.style.marginTop.indexOf('px'));
+		aT= musicVolumeSlide.style.marginTop.substring(0,musicVolumeSlide.style.marginTop.indexOf('px'))/musicVolume.style.height.substring(0,musicVolume.style.height.indexOf('px'));
+}
+
+function mSlideVolumeMove(e){
+	if(mouseDown==true)
+	{
+		var mTop= (e.pageY-mouseY);
+		mTop=aT*musicVolume.style.height.substring(0,musicVolume.style.height.indexOf('px'))+mTop;
+		musicVolumeSlide.style.marginTop=  (mTop>0&&mTop<100  ? mTop:0)+"px";
+
+	}
+}
+
+function mSlideVolumeUp(e){
+	if(mouseDown==true)
+	{
+		mouseDown=false;
+		var mTop= (e.pageY-mouseY);
+		mTop=aT*musicVolume.style.height.substring(0,musicVolume.style.height.indexOf('px'))+mTop;
+		musicVolumeSlide.style.marginTop=  (mTop>0&&mTop<100 ? mTop:0)+"px";
+		mouseDown=false;
+		mouseY=0;
+		music.volume=1-mTop/100;
+	}
+	mouseDown=false;
+}
+
+/*
+播放和暂停按钮
+*/
+function mPlay(){
+	var time = Math.floor(music.duration/60)+"分"+Math.floor(music.duration-60*Math.floor(music.duration/60))+"秒";
+	switch(music.paused){
+		case true:
+		{
+			music.play();
+			musicPlay.style.background="url(./images/button.png) 0 -159px no-repeat";
+			break;
+		}
+		case false:
+		{
+			music.pause();
+			musicPlay.style.background="url(./images/button.png) 0 -12px no-repeat";
+			break;
+		}
+	}
+}
+
+// 载入歌曲
+function loadSongs(){
+
+	playList={0:12,
+	1:{'title':"I'm Yours",'author':"Jason Mraz",'src':"./songs/I'M Yours.mp3"},
+	2:{'title':"傻子",'author':"林宥嘉",'src':"./songs/shazi.mp3"},
+	3:{'title':"那女孩对我说",'author':"黄义达",'src':"./songs/nanvhaiduiwoshuo.mp3"},
+	4:{'title':"最浪漫的事",'author':"金志文",'src':"./songs/zuilangmandeshi.mp3"},
+	5:{'title':"老男孩",'author':"筷子兄弟",'src':"./songs/laonanhai.mp3"},
+	6:{'title':"What Makes You Beautiful",'author':'One Direction','src':"./songs/What Makes You Beautiful.mp3"},
+	7:{'title':"感同身受",'author':"林宥嘉",'src':"./songs/gantongshenshou.mp3"},
+	8:{'title':"Personality",'author':"Lloyd Price",'src':"./songs/Personality.mp3"},
+	9:{'title':"Love Story",'author':"Taylor Swift",'src':"./songs/Love Story.mp3"},
+	10:{'title':"时间煮雨",'author':"郁可唯",'src':"./songs/shijianzhuyu.mp3"},
+    11:{'title':"Young Wild & Free",'author':"Snoop Dogg, Wiz Khalifa",'src':"./songs/Young Wild & Free.mp3"},
+	12:{'title':"我好想你",'author':"苏打绿",'src':"./songs/wohaoxiangni.mp3"},
+	};
+
+	//Songs cache and change//
+	var listCount = playList[0];
+	var num =1;
+    songNum=num;
+    if(songNum>listCount)
+        songNum=1;
+    num=songNum;
+    songs[0]=playList[num>0? num :num+1];
+    num=((songNum+1) > listCount ? 1 : (songNum+1));
+    songs[1]=playList[num>0? num :num+1];
+    music.src=songs[0]['src'];
+    nextSong = new Audio();
+    nextSong.src=songs[1]['src'];
+    nextSong.load();
+    songNum+=1;
+	//**************************//
+	document.getElementById('song-title').innerHTML=songs[0]['title'];
+	document.getElementById('song-author').innerHTML=songs[0]['author'];
+	setTimeout(canPlay,2000);
+	setTimeout(canRand,5000);
+}
+
+// 随机播放列表的歌曲
+function mRandPlay()
+{
+
+    var listCount = playList[0];
+    //Songs cache and change//
+    music.pause();
+    music=nextSong;
+    document.getElementById('song-title').innerHTML=songs[1]['title'];
+    document.getElementById('song-author').innerHTML=songs[1]['author'];
+    songNum+=1;
+    if(songNum>listCount)
+        songNum=1;
+    num=songNum;
+    songs[1]=playList[num>0? num :num+1];
+    nextSong = new Audio();
+    nextSong.src=songs[1]['src'];
+    nextSong.load();
+    //***************//
+    //Backgorund cache and change//
+    bdy.style.background="url("+backgroundImages[1].src+") top";
+    backgroundImages[1].src= "./love/"+(num > 0? num : num+1)+".jpg";
+    //words cache//
+    document.getElementById('city').innerHTML=words[1]['title'];
+    document.getElementById('month').innerHTML=words[1]['months'];
+    document.getElementById('stat').innerHTML=words[1]['feelings'];
+    document.getElementById('myContent').innerHTML=null;
+    inputText=words[1]['letter'];
+    i = 0;
+    delay = 150;
+    words[1]=wordList[num>0 ? num : num+1];
+    scrollit();
+    //***************//
+    //musicPlay.style.display='block';
+    musicNext.style.display='none';
+    setTimeout(canRand,5000);
+    mPlay();
+}
+
+function canPlay(){
+    musicPlay.setAttribute('onClick','javascript:mPlay()');
+    musicPlay.style.display='block';
+}
+
+function canRand(){
+    musicNext.setAttribute('onClick','javascript:mRandPlay()');
+    musicNext.style.display='block';
+}
+
+function scrollit() {
+    //设置 id 为 demo 的对象内的文字为从变量 text 的 0 开始到 i 间的文字加"_"
+    var demo = document.getElementById("myContent");
+    demo.innerHTML = inputText.slice(0, i++) + "_";
+    if (i > inputText.length) {     //当 i 大于 text 的文本长度时
+        i = inputText.length;
+        demo.innerHTML = inputText.substr(0, i);    //重设 i 为 0，使文字重新从第一个文字出现
+        //延时执行scrollit()函数,delay*10是为了让显示完整文字的时间长一点
+    }
+    //否则在delay毫秒后再次执行scrollit()函数
+    else setTimeout("scrollit()", delay);
+    return false;
+}
+</script>
+
+<body >
+	<div id='weather-body'>
+        <div id='weather'>
+            <p id='city'>喜欢一个人</p>
+            <p id='month'>不难</p>
+            <p id='stat'>被同一个人喜欢<br/>好难</p>
+        </div>
+
+        <div id="myContent">
+        </div>
+
+        <div id='music-box'>
+            <audio  src="./songs/shijianzhuyu.mp3" >
+            您的浏览器暂不支持HTML5 请选择Google chrome或其他支持HTML5的浏览器
+            </audio>
+
+            <div id='music-process'>
+                <h2 id='song-title'></h2>
+                <h3 id='song-author'></h3>
+
+                <div id='music-ctime'>0:00</div>
+                <div  id='music-process-p'>
+                    <span id='music-process-slide'></span>
+                </div>
+                <div id='music-etime'>0:00</div>
+                <br class='clear' />
+            </div>
+
+            <div id='music-volume'>
+                <div  id='music-volume-v'>
+                    <span id='music-volume-slide'></span>
+                </div>
+                <br class='clear' />
+            </div>
+            <div id='music-play'></div>
+            <div id='music-next'></div>
+            <br class='clear' />
+        </div>
+    </div>
+</body>
+<script type="text/javascript" >
+
+    window.onload=init();
+    mVolume();
+    loadSongs();
+
+</script>
+</html>
