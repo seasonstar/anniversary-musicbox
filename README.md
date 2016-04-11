@@ -5,7 +5,7 @@ Shawn Tang And Mary Zhang 一周年纪念音乐播放器
 实现音乐播放，音乐预加载，图片预加载功能
 
 
-[Anniversary](http://seasonstar.github.io/anniversary/)
+[Anniversary Music Box](http://seasonstar.github.io/anniversary-musicbox/)
 
 ## Screenshot
 ![](http://785i8w.com2.z0.glb.qiniucdn.com/1st-anniversary.jpg)
@@ -22,9 +22,9 @@ Shawn Tang And Mary Zhang 一周年纪念音乐播放器
 ## deploy
 部署到你个人的github上
 ```
-git clone https://github.com/seasonstar/anniversary.git
+git clone https://github.com/seasonstar/anniversary-musicbox.git
 
-cd anniversary
+cd anniversary-musicbox
 
 git branch gh-pages
 
@@ -33,4 +33,4 @@ git checkout gh-pages
 git push origin gh-pages
 ```
 
-然后打开`http://<自己的账号名>.github.io/anniversary/`，就可以看到了。
+然后打开`http://<自己的账号名>.github.io/anniversary-musicbox/`，就可以看到了。
