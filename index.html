@@ -62,9 +62,11 @@ var locations=new Array();
 var feelings=new Array();
 var words=new Array();
 var wordList=new Array();
+var canPlayDelay = 2000;    // 第一首歌播放需等待的时间
+var canNextDelay = 5000;    // 可以跳到下一首歌需等待的时间
 
 var i = 0;
-var delay = 150;
+var typeDelay = 150;        // 字体敲击速度
 var inputText;
 
 var wordList={
@@ -81,6 +83,22 @@ var wordList={
     11:{'title':"私奔",'months':"11个月了", 'feelings':"幸福", 'letter':"7月14日，我去了南宁<br>21号，我就溜回广州了<br>并且，我再一次穿了耳洞<br>22号，你和妈妈出了矛盾<br>你收拾起你的行李，决心踏出家门，开启了说走就走的旅程<br>23号，我们做出了在沙滩上埋鞋子并且差点找不到的经典事情<br>但我终究找到了，又一次在比比面前当回了英雄<br><br>一起去沙滩，一直是我们的愿望之一，实现了<br>晚上，沙滩上的浪好大，我们的脚泡在海水中，让它慢慢被沙子吞噬<br>我抱着你，在海滩上打转，你的笑声跟着浪花一起成了一首歌<br>我为你烧了不少烤翅，你吃得甜滋滋，整晚都乖得不得了<br><br>24号到南宁，带你体验了八天的自由生活<br>8月1号回到恩平，过我奶奶的生日，和你过了5天的小城生活<br>骑单车，打羽毛球，摘莲雾吃，半夜开车去吃烧烤……<br>每一样都成了我们的《第一次》<br>每一样都成了我们的《简单爱》<br><br>8月14日，你跟我出国前最近一次见面，微博搜了我好多老照片<br>我们去吃了黄记煌，又拍了一版猥琐照片<br><br>15号，你飞走了<br>"},
     12:{'title':"地球两边",'months':"一周年", 'feelings':"思念",'letter':"13000KM，遥远的距离<br>你又瘦了，89斤<br>但你一直做的很好，不让我担心<br>一个人生活在家里，每天给自己做饭，自己睡觉<br>无聊了会看电视剧，上网购物<br>……<渐渐的，你变得比以前更独立，更坚强了<br>两地的时差，让我们都成了夜猫，都多了对熊猫眼<br>你打印了很多我们一起的照片，挂在房间里<br>你定制了一双写有我们姓的运动鞋<br>你每天抱着熊宝宝睡觉<br>你的挂念无时无刻不催促着我飞往有你在的地方<br>所以我很快又去搞好旅游签证<br>接着买好了机票<br>仿佛又是一次说走就走的行程<br>此刻，只想写封信给你<br><br>“亲爱的张梦圆同志，我很喜欢你，我已经跟妈妈说过了，我要飞美国，他们虽然稍有意见，但是我决定了，不会变。现在我还有一些事务还没交代好，所以，请你做好在美国接待我的准备。<br>亲爱的张梦圆同志，我不会说话，但我有句心里话要告诉你。<br>我想和你生活在一起，永远。”"},
 	};
+
+playList={
+	1:{'title':"I'm Yours",'author':"Jason Mraz",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/I%27M%20Yours.mp3"},
+	2:{'title':"傻子",'author':"林宥嘉",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/shazi.mp3"},
+	3:{'title':"那女孩对我说",'author':"黄义达",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/nanvhaiduiwoshuo.mp3"},
+	4:{'title':"最浪漫的事",'author':"金志文",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/zuilangmandeshi.mp3"},
+	5:{'title':"老男孩",'author':"筷子兄弟",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/laonanhai.mp3"},
+	6:{'title':"What Makes You Beautiful",'author':'One Direction','src':"http://785i8w.com2.z0.glb.qiniucdn.com/What%20Makes%20You%20Beautiful.mp3"},
+	7:{'title':"感同身受",'author':"林宥嘉",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/gantongshenshou.mp3"},
+	8:{'title':"Personality",'author':"Lloyd Price",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/Personality.mp3"},
+	9:{'title':"Love Story",'author':"Taylor Swift",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/Love%20Story.mp3"},
+	10:{'title':"时间煮雨",'author':"郁可唯",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/shijianzhuyu.mp3"},
+    11:{'title':"Young Wild & Free",'author':"Snoop Dogg, Wiz Khalifa",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/Young%20Wild%20&%20Free.mp3"},
+	12:{'title':"我好想你",'author':"苏打绿",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/wohaoxiangni.mp3"},
+};
+
 
 function init(){
 
@@ -107,7 +125,7 @@ function init(){
     backgroundImages[0] = new Image();
     backgroundImages[1] = new Image();
     backgroundImages[0].src = "./love/"+backgroundNumber+".jpg";
-    backgroundImages[1].src = "./love/"+(backgroundNumber >= 13 ? 1:backgroundNumber+1)+".jpg";
+    backgroundImages[1].src = "./love/"+(backgroundNumber > 12 ? 1:backgroundNumber+1)+".jpg";
     bdy.style.background = "url("+backgroundImages[0].src+") top";
     //*****************//
     //words cache//
@@ -153,7 +171,7 @@ function mProcess(){
 		musicEtime.innerHTML=etime;
 		if(music.ended==true)
 		{
-			mRandPlay();
+			mNextPlay();
 		}
 	}
 }
@@ -260,23 +278,8 @@ function mPlay(){
 // 载入歌曲
 function loadSongs(){
 
-	playList={0:12,
-	1:{'title':"I'm Yours",'author':"Jason Mraz",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/I%27M%20Yours.mp3"},
-	2:{'title':"傻子",'author':"林宥嘉",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/shazi.mp3"},
-	3:{'title':"那女孩对我说",'author':"黄义达",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/nanvhaiduiwoshuo.mp3"},
-	4:{'title':"最浪漫的事",'author':"金志文",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/zuilangmandeshi.mp3"},
-	5:{'title':"老男孩",'author':"筷子兄弟",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/laonanhai.mp3"},
-	6:{'title':"What Makes You Beautiful",'author':'One Direction','src':"http://785i8w.com2.z0.glb.qiniucdn.com/What%20Makes%20You%20Beautiful.mp3"},
-	7:{'title':"感同身受",'author':"林宥嘉",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/gantongshenshou.mp3"},
-	8:{'title':"Personality",'author':"Lloyd Price",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/Personality.mp3"},
-	9:{'title':"Love Story",'author':"Taylor Swift",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/Love%20Story.mp3"},
-	10:{'title':"时间煮雨",'author':"郁可唯",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/shijianzhuyu.mp3"},
-    11:{'title':"Young Wild & Free",'author':"Snoop Dogg, Wiz Khalifa",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/Young%20Wild%20&%20Free.mp3"},
-	12:{'title':"我好想你",'author':"苏打绿",'src':"http://785i8w.com2.z0.glb.qiniucdn.com/wohaoxiangni.mp3"},
-	};
-
 	//Songs cache and change//
-	var listCount = playList[0];
+	var listCount = 12;
 	var num =1;
     songNum=num;
     if(songNum>listCount)
@@ -293,15 +296,14 @@ function loadSongs(){
 	//**************************//
 	document.getElementById('song-title').innerHTML=songs[0]['title'];
 	document.getElementById('song-author').innerHTML=songs[0]['author'];
-	setTimeout(canPlay,2000);
-	setTimeout(canRand,5000);
+	setTimeout(canPlay, canPlayDelay);
+	setTimeout(canGoNext,canNextDelay);
 }
 
-// 随机播放列表的歌曲
-function mRandPlay()
+function mNextPlay()
 {
 
-    var listCount = playList[0];
+    var listCount = 12;
     //Songs cache and change//
     music.pause();
     music=nextSong;
@@ -326,13 +328,12 @@ function mRandPlay()
     document.getElementById('myContent').innerHTML=null;
     inputText=words[1]['letter'];
     i = 0;
-    delay = 150;
     words[1]=wordList[num>0 ? num : num+1];
     scrollit();
     //***************//
     //musicPlay.style.display='block';
     musicNext.style.display='none';
-    setTimeout(canRand,5000);
+    setTimeout(canGoNext,canNextDelay);
     mPlay();
 }
 
@@ -341,8 +342,8 @@ function canPlay(){
     musicPlay.style.display='block';
 }
 
-function canRand(){
-    musicNext.setAttribute('onClick','javascript:mRandPlay()');
+function canGoNext(){
+    musicNext.setAttribute('onClick','javascript:mNextPlay()');
     musicNext.style.display='block';
 }
 
@@ -353,10 +354,10 @@ function scrollit() {
     if (i > inputText.length) {     //当 i 大于 text 的文本长度时
         i = inputText.length;
         demo.innerHTML = inputText.substr(0, i);    //重设 i 为 0，使文字重新从第一个文字出现
-        //延时执行scrollit()函数,delay*10是为了让显示完整文字的时间长一点
+        //延时执行scrollit()函数,typeDelay*10是为了让显示完整文字的时间长一点
     }
-    //否则在delay毫秒后再次执行scrollit()函数
-    else setTimeout("scrollit()", delay);
+    //否则在typeDelay毫秒后再次执行scrollit()函数
+    else setTimeout("scrollit()", typeDelay);
     return false;
 }
 </script>
